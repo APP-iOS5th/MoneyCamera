@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */; };
 		1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */; };
-		1854E1732C0EFCA200E4B5D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1722C0EFCA200E4B5D7 /* ViewController.swift */; };
+		1854E1732C0EFCA200E4B5D7 /* RequestImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */; };
 		1854E1762C0EFCA200E4B5D7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1854E1752C0EFCA200E4B5D7 /* Base */; };
 		1854E1782C0EFCA500E4B5D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */; };
 		1854E17B2C0EFCA500E4B5D7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1854E17A2C0EFCA500E4B5D7 /* Base */; };
+		1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1854E16B2C0EFCA200E4B5D7 /* MoneyCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1854E1722C0EFCA200E4B5D7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestImageViewController.swift; sourceTree = "<group>"; };
 		1854E1752C0EFCA200E4B5D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1854E17A2C0EFCA500E4B5D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1854E17C2C0EFCA500E4B5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,8 @@
 			children = (
 				1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */,
 				1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */,
-				1854E1722C0EFCA200E4B5D7 /* ViewController.swift */,
+				1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */,
+				1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */,
 				1854E1742C0EFCA200E4B5D7 /* Main.storyboard */,
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 				1854E1792C0EFCA500E4B5D7 /* LaunchScreen.storyboard */,
@@ -138,9 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1854E1732C0EFCA200E4B5D7 /* ViewController.swift in Sources */,
+				1854E1732C0EFCA200E4B5D7 /* RequestImageViewController.swift in Sources */,
 				1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
+				1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +296,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자의 앨범에 접근합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -319,8 +326,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자의 앨범에 접근합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
