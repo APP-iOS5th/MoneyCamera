@@ -10,7 +10,7 @@ import CoreML
 import Vision
 
 class RequestImageViewController: UIViewController {
-    let resultViewController = ResultViewController()
+    
     
     var imagePicker: UIImagePickerController{
         let picker = UIImagePickerController()
@@ -49,6 +49,7 @@ class RequestImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         mainContainer.addArrangedSubview(moneyImageView)
         mainContainer.addArrangedSubview(cameraButton)
@@ -90,17 +91,18 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        picker.dismiss(animated: true)
+        
         
         guard let userPickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             fatalError("Failed Original Image pick")
         }
         
-        moneyImageView.image = userPickedImage
-        
-//        resultViewController.selectedImage = userPickedImage
-//        show(resultViewController, sender: self)
-    
+        picker.dismiss(animated: true){
+            
+            let resultViewController = ResultViewController()
+            resultViewController.selectedImage = userPickedImage
+            self.navigationController?.pushViewController(resultViewController, animated: true)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

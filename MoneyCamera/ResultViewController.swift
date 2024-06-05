@@ -9,18 +9,24 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    weak var imageView: UIImageView!
+    var imageView: UIImageView!
     var selectedImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        self.title = "Selected Image"
+        
+        imageView = UIImageView(frame: CGRect.zero)
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
         if let image = selectedImage {
             imageView.image = image
             imageView.contentMode = .scaleAspectFit
         }
         
-        view.addSubview(imageView)
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         let safeArea = view.safeAreaLayoutGuide
