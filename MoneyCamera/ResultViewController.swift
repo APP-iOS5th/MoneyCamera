@@ -8,63 +8,112 @@
 import UIKit
 
 class ResultViewController: UITableViewController {
-    private lazy var imageView: UIImageView = {
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.text = "계산결과"
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var billImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private lazy var totalPriceLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var fiftyThousand: UIStackView = {
+    private lazy var totalPrice: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        
-        let billName = UILabel()
-        billName.text = "50000원"
-        
-        let label = UILabel()
-        label.text = "0"
-        
-        let stepper = UIStepper()
-        stepper.minimumValue = 0
-        stepper.stepValue = 1
-        stepper.value = 0
-        stepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .leading
+        stackView.distribution = .equalCentering
         
         
-        let spacerView = UIView()
-        spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        let totalLabel = UILabel()
+        totalLabel.text = "총액"
+        totalLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         
-        stackView.addArrangedSubview(billName)
-        stackView.addArrangedSubview(spacerView)
-        stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(stepper)
+        let price = UILabel()
+        price.text = "50000원"
+        price.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        
+        stackView.addArrangedSubview(totalLabel)
+        stackView.addArrangedSubview(price)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
+    private lazy var detailPrice: UIStackView = {
+        let mainStackView = UIStackView()
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 10
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleLabel = UILabel()
+        titleLabel.text = "세부사항"
+        
+        //menuLabel
+        let menuLabelStack = UIStackView()
+        menuLabelStack.axis = .horizontal
+        menuLabelStack.alignment = .center
+        menuLabelStack.distribution = .equalSpacing
+        menuLabelStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let categoryLabel = UILabel()
+        categoryLabel.text = "항목"
+        
+        let numberLabel = UILabel()
+        numberLabel.text = "개수"
+        
+        menuLabelStack.addArrangedSubview(categoryLabel)
+        menuLabelStack.addArrangedSubview(numberLabel)
+        
+        let fiftyThousandStack = createStepperStackView(billNameText: "50000원", initialBillNumberInt: 0)
+        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: 0)
+        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: 0)
+        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: 0)
+       
+        
+        mainStackView.addArrangedSubview(titleLabel)
+        mainStackView.addArrangedSubview(menuLabelStack)
+        mainStackView.addArrangedSubview(fiftyThousandStack)
+        mainStackView.addArrangedSubview(tenThousandStack)
+        mainStackView.addArrangedSubview(fiveThousandStack)
+        mainStackView.addArrangedSubview(oneThousandStack)
+        
+        
+        NSLayoutConstraint.activate([
+            menuLabelStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            menuLabelStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            
+            fiftyThousandStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            fiftyThousandStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            
+            tenThousandStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            tenThousandStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            
+            fiveThousandStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            fiveThousandStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            
+            oneThousandStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            oneThousandStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+        ])
+        
+       return mainStackView
+    }()
     
     var selectedImage: UIImage?
-    var totalPrice: Int = 24000
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.separatorStyle = .none
         
         view.backgroundColor = .white
-        self.title = "Selected Image"
+        self.title = "얼마에요"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -74,78 +123,136 @@ class ResultViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.selectionStyle = .none
-            cell.contentView.addSubview(imageView)
-            if let image = selectedImage {
-                imageView.image = image
-            } else {
-                imageView.image = UIImage(systemName: "face.smiling")
-            }
+            cell.contentView.addSubview(titleLabel)
             
             NSLayoutConstraint.activate([
-                imageView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-                imageView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                imageView.widthAnchor.constraint(equalToConstant: 350),
-                imageView.heightAnchor.constraint(equalToConstant: 350)
-                
+                titleLabel.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
+                titleLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor)
             ])
             return cell
+            
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.selectionStyle = .none
-            cell.contentView.addSubview(totalPriceLabel)
-            totalPriceLabel.text = "총액: \(totalPrice)원"
+            cell.contentView.addSubview(billImage)
             
-            let marginGuide = cell.contentView.layoutMarginsGuide
+            if let image = selectedImage {
+                billImage.image = image
+            } else {
+                billImage.image = UIImage(systemName: "questionmark.folder")
+            }
+            
             NSLayoutConstraint.activate([
-                totalPriceLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                totalPriceLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor),
-                totalPriceLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor)
+                billImage.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
+                billImage.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+                billImage.widthAnchor.constraint(equalToConstant: 350),
+                billImage.heightAnchor.constraint(equalToConstant: 350)
+                
             ])
             return cell
-            
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.selectionStyle = .none
-            cell.contentView.addSubview(fiftyThousand)
+            cell.contentView.addSubview(totalPrice)
             
             let marginGuide = cell.contentView.layoutMarginsGuide
             NSLayoutConstraint.activate([
-                fiftyThousand.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                fiftyThousand.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor),
-                fiftyThousand.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor)
+                totalPrice.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+                totalPrice.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor)
             ])
             return cell
             
-        default :
-            return tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.selectionStyle = .none
+            cell.contentView.addSubview(detailPrice)
             
+            let marginGuide = cell.contentView.layoutMarginsGuide
+            NSLayoutConstraint.activate([
+                detailPrice.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+                detailPrice.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor),
+                detailPrice.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor)
+            ])
+            return cell
+            
+        default:
+            return tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row{
-        case 0: return 370
-        case 1: return 60
+        case 1: return 370
+        case 2: return 90
+        case 3: return 280
         default: return 44.5
         }
     }
     
     
-    @objc func stepperValueChanged(_ sender: UIStepper) {
-        if let label = fiftyThousand.arrangedSubviews[2] as? UILabel {
-            label.text = "\(Int(sender.value))"
+    @objc func plusButtonTapped(_ sender: UIButton) {
+        if let billNumStack = sender.superview as? UIStackView,
+           let billNumberLabel = billNumStack.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100}) as? UILabel,
+           let currentNumber = Int(billNumberLabel.text ?? "0") {
+            billNumberLabel.text = "\(currentNumber + 1)"
         }
-        totalPrice += 5000
-        totalPriceLabel.text = "총액: \(totalPrice)원"
+    }
+
+    @objc func minusButtonTapped(_ sender: UIButton) {
+        if let billNumStack = sender.superview as? UIStackView,
+           let billNumberLabel = billNumStack.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100}) as? UILabel,
+           let currentNumber = Int(billNumberLabel.text ?? "0"), currentNumber > 0 {
+            billNumberLabel.text = "\(currentNumber - 1)"
+        }
     }
     
+    private func createStepperStackView(billNameText: String, initialBillNumberInt: Int) -> UIStackView {
+        
+        let stepperStack = UIStackView()
+        stepperStack.axis = .horizontal
+        stepperStack.alignment = .center
+        stepperStack.distribution = .equalSpacing
+        stepperStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let billName = UILabel()
+        billName.text = billNameText
+        
+        let billNumStack = UIStackView()
+        billNumStack.axis = .horizontal
+        billNumStack.spacing = 5
+        
+        let billNumber = UILabel()
+        billNumber.text = "\(initialBillNumberInt)"
+        billNumber.tag = 100
+        
+        
+        let plusButton = UIButton(type: .custom)
+        var config = UIButton.Configuration.filled()
+        config.title = "+"
+        plusButton.configuration = config
+        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        
+        let minusButton = UIButton(type: .custom)
+        config.title = "-"
+        minusButton.configuration = config
+        minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
+        
+        billNumStack.addArrangedSubview(plusButton)
+        billNumStack.addArrangedSubview(billNumber)
+        billNumStack.addArrangedSubview(minusButton)
+        
+        stepperStack.addArrangedSubview(billName)
+        stepperStack.addArrangedSubview(billNumStack)
+        
+        return stepperStack
+    }
 }
+
