@@ -127,6 +127,10 @@ class ResultViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        VisionObjectRecognitionModel.dictReset()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -269,6 +273,7 @@ class ResultViewController: UITableViewController {
           let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
             price.text = "\(totalCurrency)원"
         }
+    
     func classifyingCurrencies() {
             for Currency in VisionObjectRecognitionModel.dict {
 
