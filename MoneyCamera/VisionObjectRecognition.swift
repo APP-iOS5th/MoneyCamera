@@ -83,4 +83,7 @@ class VisionObjectRecognition {
         dict[key] = (dict[key] ?? 0) + 1
     }
     
+    func dictReset() {
+        dict.removeAll()
+    }
 }
