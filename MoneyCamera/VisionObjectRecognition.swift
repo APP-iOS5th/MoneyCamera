@@ -86,5 +86,4 @@ class VisionObjectRecognition {
     func dictReset() {
         dict.removeAll()
     }
-    
 }
