@@ -10,6 +10,7 @@ import CoreML
 import Vision
 
 class RequestImageViewController: UIViewController {
+    let VisionObjectRecognitionModel = VisionObjectRecognition.shared
     
     private lazy var mainContainer: UIStackView = {
         let stackView = UIStackView()
@@ -105,6 +106,8 @@ class RequestImageViewController: UIViewController {
 // 사진 선택 후
 extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         
@@ -112,6 +115,13 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
         guard let userPickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             fatalError("Failed Original Image pick")
         }
+        
+        guard let coreImage = CIImage(image: userPickedImage) else {
+            fatalError("Failed CIImage convert")
+        }
+        
+        VisionObjectRecognitionModel.setupVision()
+        VisionObjectRecognitionModel.VisonHandler(image: coreImage)
         
         picker.dismiss(animated: true){
             
