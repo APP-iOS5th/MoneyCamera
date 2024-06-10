@@ -265,27 +265,27 @@ class ResultViewController: UITableViewController {
     }
     
     func totalAmount() {
- 
-      let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandStackBillInit + 5000 * fiveThousandStackBillInit + 1000 * oneThousandStackBillInit
-        price.text = "\(totalCurrency)원"
-    }
-    func classifyingCurrencies() {
-        for Currency in VisionObjectRecognitionModel.dict {
 
-            switch Currency.key {
-            case "50000won" :
-                fiftyThousandBillInit = Currency.value
-            case "10000won":
-                tenThousandStackBillInit = Currency.value
-            case "5000won":
-                fiveThousandStackBillInit = Currency.value
-            case "1000won":
-                oneThousandStackBillInit = Currency.value
-            default:
-                break
-            }
-     
+          let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
+            price.text = "\(totalCurrency)원"
         }
-    }
+    func classifyingCurrencies() {
+            for Currency in VisionObjectRecognitionModel.dict {
+
+                switch Currency.key {
+                case "50000won" :
+                    fiftyThousandBillInit = Currency.value
+                case "10000won":
+                    tenThousandBillInit = Currency.value
+                case "5000won":
+                    fiveThousandBillInit = Currency.value
+                case "1000won":
+                    oneThousandBillInit = Currency.value
+                default:
+                    break
+                }
+
+            }
+        }
 }
 
