@@ -8,7 +8,12 @@
 import UIKit
 
 class ResultViewController: UITableViewController {
-    
+    let VisionObjectRecognitionModel = VisionObjectRecognition.shared
+    var fiftyThousandBillInit = 0
+    var tenThousandBillInit = 0
+    var fiveThousandBillInit = 0
+    var oneThousandBillInit = 0
+    let price = UILabel()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -37,7 +42,7 @@ class ResultViewController: UITableViewController {
         totalLabel.text = "총액"
         totalLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         
-        let price = UILabel()
+//        let price = UILabel()
         price.text = "50000원"
         price.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         
@@ -49,6 +54,10 @@ class ResultViewController: UITableViewController {
     }()
     
     private lazy var detailPrice: UIStackView = {
+        
+        classifyingCurrencies()
+        totalAmount()
+
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
         mainStackView.spacing = 10
@@ -73,10 +82,10 @@ class ResultViewController: UITableViewController {
         menuLabelStack.addArrangedSubview(categoryLabel)
         menuLabelStack.addArrangedSubview(numberLabel)
         
-        let fiftyThousandStack = createStepperStackView(billNameText: "50000원", initialBillNumberInt: 0)
-        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: 0)
-        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: 0)
-        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: 0)
+        let fiftyThousandStack = createStepperStackView(billNameText: "50000원", initialBillNumberInt: fiftyThousandBillInit)
+        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: tenThousandBillInit)
+        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: fiveThousandBillInit)
+        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: oneThousandBillInit)
        
         
         mainStackView.addArrangedSubview(titleLabel)
@@ -253,6 +262,30 @@ class ResultViewController: UITableViewController {
         stepperStack.addArrangedSubview(billNumStack)
         
         return stepperStack
+    }
+    
+    func totalAmount() {
+ 
+      let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandStackBillInit + 5000 * fiveThousandStackBillInit + 1000 * oneThousandStackBillInit
+        price.text = "\(totalCurrency)원"
+    }
+    func classifyingCurrencies() {
+        for Currency in VisionObjectRecognitionModel.dict {
+
+            switch Currency.key {
+            case "50000won" :
+                fiftyThousandBillInit = Currency.value
+            case "10000won":
+                tenThousandStackBillInit = Currency.value
+            case "5000won":
+                fiveThousandStackBillInit = Currency.value
+            case "1000won":
+                oneThousandStackBillInit = Currency.value
+            default:
+                break
+            }
+     
+        }
     }
 }
 

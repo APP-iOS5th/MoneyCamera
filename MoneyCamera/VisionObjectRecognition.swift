@@ -33,8 +33,8 @@ class VisionObjectRecognition {
         // Setup Vision parts
         let error: NSError! = nil
         
-        guard let modelURL = Bundle.main.url(forResource: "YOLOv3", withExtension: "mlmodelc") else {
-            return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
+        guard let modelURL = Bundle.main.url(forResource: "MixDataObjectDetector", withExtension: "mlmodelc") else {
+            return NSError(domain: "VisionObjectRecognition", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
