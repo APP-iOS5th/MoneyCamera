@@ -50,6 +50,18 @@ class RequestImageViewController: UIViewController {
         button.addTarget(self, action: #selector(albumTapped), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var historyButton: UIButton = {
+        let button = UIButton(type: .custom)
+        var config = UIButton.Configuration.filled()
+        config.title = "히스토리"
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        config.cornerStyle = .medium
+        button.configuration = config
+        button.addTarget(self, action: #selector(historyTapped), for: .touchUpInside)
+        return button
+    }()
 
 
     override func viewDidLoad() {
@@ -59,6 +71,7 @@ class RequestImageViewController: UIViewController {
         mainContainer.addArrangedSubview(moneyImageView)
         mainContainer.addArrangedSubview(cameraButton)
         mainContainer.addArrangedSubview(albumButton)
+        mainContainer.addArrangedSubview(historyButton)
         
         view.addSubview(mainContainer)
         mainContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -99,6 +112,11 @@ class RequestImageViewController: UIViewController {
         picker.sourceType = .photoLibrary
         picker.allowsEditing = true
         present(picker, animated: true)
+    }
+    
+    @objc func historyTapped() {
+        let historyViewController = HistoryViewController()
+        show(historyViewController, sender: nil)
     }
     
 }
