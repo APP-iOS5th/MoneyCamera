@@ -15,6 +15,7 @@
 		1854E17B2C0EFCA500E4B5D7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1854E17A2C0EFCA500E4B5D7 /* Base */; };
 		1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */; };
 		18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */; };
+		B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1854E17C2C0EFCA500E4B5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
+		B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MixDataObjectDetector.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */,
 				1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */,
 				18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */,
+				B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */,
 				1854E1742C0EFCA200E4B5D7 /* Main.storyboard */,
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 				1854E1792C0EFCA500E4B5D7 /* LaunchScreen.storyboard */,
@@ -146,6 +149,7 @@
 			files = (
 				18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */,
 				1854E1732C0EFCA200E4B5D7 /* RequestImageViewController.swift in Sources */,
+				B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */,
 				1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
 				1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */,
@@ -300,7 +304,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
+				DEVELOPMENT_TEAM = KM8D8UY7M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
@@ -330,7 +334,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
+				DEVELOPMENT_TEAM = KM8D8UY7M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
