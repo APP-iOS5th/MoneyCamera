@@ -10,9 +10,9 @@ import UIKit
 class ResultViewController: UITableViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
     var fiftyThousandBillInit = 0
-    var tenThousandStackBillInit = 0
-    var fiveThousandStackBillInit = 0
-    var oneThousandStackBillInit = 0
+    var tenThousandBillInit = 0
+    var fiveThousandBillInit = 0
+    var oneThousandBillInit = 0
     let price = UILabel()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -83,9 +83,9 @@ class ResultViewController: UITableViewController {
         menuLabelStack.addArrangedSubview(numberLabel)
         
         let fiftyThousandStack = createStepperStackView(billNameText: "50000원", initialBillNumberInt: fiftyThousandBillInit)
-        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: tenThousandStackBillInit)
-        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: fiveThousandStackBillInit)
-        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: oneThousandStackBillInit)
+        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: tenThousandBillInit)
+        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: fiveThousandBillInit)
+        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: oneThousandBillInit)
        
         
         mainStackView.addArrangedSubview(titleLabel)
