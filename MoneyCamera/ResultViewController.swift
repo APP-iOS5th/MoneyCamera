@@ -9,11 +9,15 @@ import UIKit
 
 class ResultViewController: UITableViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
+    var selectedImage: UIImage?
+    
     var fiftyThousandBillInit = 0
     var tenThousandBillInit = 0
     var fiveThousandBillInit = 0
     var oneThousandBillInit = 0
-    let price = UILabel()
+    var totalPrice = 0
+    let priceLabel = UILabel()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -30,7 +34,7 @@ class ResultViewController: UITableViewController {
         return imageView
     }()
     
-    private lazy var totalPrice: UIStackView = {
+    private lazy var totalPriceStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
@@ -42,21 +46,18 @@ class ResultViewController: UITableViewController {
         totalLabel.text = "총액"
         totalLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         
-//        let price = UILabel()
-        price.text = "50000원"
-        price.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+
+        priceLabel.text = "\(totalPrice)원"
+        priceLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         
         stackView.addArrangedSubview(totalLabel)
-        stackView.addArrangedSubview(price)
+        stackView.addArrangedSubview(priceLabel)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     private lazy var detailPrice: UIStackView = {
-        
-        classifyingCurrencies()
-        totalAmount()
 
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
@@ -82,10 +83,10 @@ class ResultViewController: UITableViewController {
         menuLabelStack.addArrangedSubview(categoryLabel)
         menuLabelStack.addArrangedSubview(numberLabel)
         
-        let fiftyThousandStack = createStepperStackView(billNameText: "50000원", initialBillNumberInt: fiftyThousandBillInit)
-        let tenThousandStack = createStepperStackView(billNameText: "10000원", initialBillNumberInt: tenThousandBillInit)
-        let fiveThousandStack = createStepperStackView(billNameText: "5000원", initialBillNumberInt: fiveThousandBillInit)
-        let oneThousandStack = createStepperStackView(billNameText: "1000원", initialBillNumberInt: oneThousandBillInit)
+        let fiftyThousandStack = createStepperStackView(billNameInt: 50000, initialBillNumberInt: fiftyThousandBillInit)
+        let tenThousandStack = createStepperStackView(billNameInt: 10000, initialBillNumberInt: tenThousandBillInit)
+        let fiveThousandStack = createStepperStackView(billNameInt: 5000, initialBillNumberInt: fiveThousandBillInit)
+        let oneThousandStack = createStepperStackView(billNameInt: 1000, initialBillNumberInt: oneThousandBillInit)
        
         
         mainStackView.addArrangedSubview(titleLabel)
@@ -116,7 +117,7 @@ class ResultViewController: UITableViewController {
        return mainStackView
     }()
     
-    var selectedImage: UIImage?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +126,13 @@ class ResultViewController: UITableViewController {
         self.title = "얼마에요"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        classifyingCurrencies()
+        totalAmount()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        VisionObjectRecognitionModel.dictReset()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -174,12 +182,12 @@ class ResultViewController: UITableViewController {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.selectionStyle = .none
-            cell.contentView.addSubview(totalPrice)
+            cell.contentView.addSubview(totalPriceStack)
             
             let marginGuide = cell.contentView.layoutMarginsGuide
             NSLayoutConstraint.activate([
-                totalPrice.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-                totalPrice.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor)
+                totalPriceStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+                totalPriceStack.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor)
             ])
             return cell
             
@@ -210,24 +218,7 @@ class ResultViewController: UITableViewController {
         }
     }
     
-    
-    @objc func plusButtonTapped(_ sender: UIButton) {
-        if let billNumStack = sender.superview as? UIStackView,
-           let billNumberLabel = billNumStack.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100}) as? UILabel,
-           let currentNumber = Int(billNumberLabel.text ?? "0") {
-            billNumberLabel.text = "\(currentNumber + 1)"
-        }
-    }
-
-    @objc func minusButtonTapped(_ sender: UIButton) {
-        if let billNumStack = sender.superview as? UIStackView,
-           let billNumberLabel = billNumStack.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100}) as? UILabel,
-           let currentNumber = Int(billNumberLabel.text ?? "0"), currentNumber > 0 {
-            billNumberLabel.text = "\(currentNumber - 1)"
-        }
-    }
-    
-    private func createStepperStackView(billNameText: String, initialBillNumberInt: Int) -> UIStackView {
+    private func createStepperStackView(billNameInt: Int, initialBillNumberInt: Int) -> UIStackView {
         
         let stepperStack = UIStackView()
         stepperStack.axis = .horizontal
@@ -236,7 +227,7 @@ class ResultViewController: UITableViewController {
         stepperStack.translatesAutoresizingMaskIntoConstraints = false
         
         let billName = UILabel()
-        billName.text = billNameText
+        billName.text = "\(billNameInt)원"
         
         let billNumStack = UIStackView()
         billNumStack.axis = .horizontal
@@ -251,12 +242,16 @@ class ResultViewController: UITableViewController {
         var config = UIButton.Configuration.filled()
         config.title = "+"
         plusButton.configuration = config
-        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        plusButton.addAction(UIAction { [weak self] _ in
+            self?.updateBillNumber(for: billNumStack, increment: 1, billValue: billNameInt)
+        }, for: .touchUpInside)
         
         let minusButton = UIButton(type: .custom)
         config.title = "-"
         minusButton.configuration = config
-        minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
+        minusButton.addAction(UIAction { [weak self] _ in
+            self?.updateBillNumber(for: billNumStack, increment: -1, billValue: billNameInt)
+        }, for: .touchUpInside)
         
         billNumStack.addArrangedSubview(plusButton)
         billNumStack.addArrangedSubview(billNumber)
@@ -269,28 +264,40 @@ class ResultViewController: UITableViewController {
     }
     
     func totalAmount() {
+        let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
+        totalPrice = totalCurrency
+    }
 
-          let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
-            price.text = "\(totalCurrency)원"
-        }
     
     func classifyingCurrencies() {
-            for Currency in VisionObjectRecognitionModel.dict {
-
-                switch Currency.key {
-                case "50000won" :
-                    fiftyThousandBillInit = Currency.value
-                case "10000won":
-                    tenThousandBillInit = Currency.value
-                case "5000won":
-                    fiveThousandBillInit = Currency.value
-                case "1000won":
-                    oneThousandBillInit = Currency.value
-                default:
-                    break
-                }
-
+        for Currency in VisionObjectRecognitionModel.dict {
+            
+            switch Currency.key {
+            case "50000won" :
+                fiftyThousandBillInit = Currency.value
+            case "10000won":
+                tenThousandBillInit = Currency.value
+            case "5000won":
+                fiveThousandBillInit = Currency.value
+            case "1000won":
+                oneThousandBillInit = Currency.value
+            default:
+                break
+            }
+            
+        }
+    }
+    
+    func updateBillNumber(for stackView: UIStackView, increment: Int, billValue: Int) {
+        if let billNumberLabel = stackView.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100 }) as? UILabel,
+           let currentNumber = Int(billNumberLabel.text ?? "0") {
+            let newNumber = currentNumber + increment
+            if newNumber >= 0 {
+                billNumberLabel.text = "\(newNumber)"
+                totalPrice += increment * billValue
+                priceLabel.text = "\(totalPrice)원"
             }
         }
+    }
 }
 
