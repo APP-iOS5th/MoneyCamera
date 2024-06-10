@@ -20,9 +20,8 @@ class CurrencyRecognitionResult: NSObject, NSCoding {
     }
     
     func encode(with coder: NSCoder) {
-        if let jpegData = image.jpegData(compressionQuality: 0.8) { // JPEG 형식으로 저장
+        if let jpegData = image.jpegData(compressionQuality: 1.0) {
             coder.encode(jpegData, forKey: "image")
-            print("Encoding Image Data: \(jpegData.count) bytes") // debug
         }
         coder.encode(totalAmount, forKey: "totalAmount")
         coder.encode(date, forKey: "date")
@@ -35,9 +34,9 @@ class CurrencyRecognitionResult: NSObject, NSCoding {
               let date = coder.decodeObject(forKey: "date") as? Date else {
             return nil
         }
-        print("Decoding Image Data: \(imageData.count) bytes") // debug
         self.image = image
         self.totalAmount = totalAmount
         self.date = date
     }
 }
+

@@ -5,125 +5,8 @@
 //  Created by changhyen yun on 6/10/24.
 //
 
-//import Foundation
-//import UIKit
-//
-//class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-//    
-//    // 데이터 정해지면 수정 예정
-//    private let data:[(itemNmae: String, date: String, image: UIImage?)] = [
-//        ("Apple", "2023-06-01", UIImage(systemName: "coloncurrencysign.circle")),
-//        ("Banana", "2023-06-02", UIImage(systemName: "coloncurrencysign.circle")),
-//        ("Cherry", "2023-06-03", UIImage(systemName: "coloncurrencysign.circle")),
-//        ("Date", "2023-06-04", UIImage(systemName: "coloncurrencysign.circle")),
-//        ("Elderberry", "2023-06-05", UIImage(systemName: "coloncurrencysign.circle"))
-//    ]
-//    
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        return tableView
-//    }()
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        setupTableView()
-//    }
-//    
-//    private func setupTableView() {
-//        view.addSubview(tableView)
-//        
-//        NSLayoutConstraint.activate([
-//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ])
-//    }
-//    
-//    // MARK: - UITableViewDataSource
-//    
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return data.count
-//    }
-//    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 300
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell
-//        let item = data[indexPath.row]
-//        guard let unWrappedCell = cell else {
-//            return UITableViewCell()
-//        }
-//
-//        unWrappedCell.configure(with: item.itemNmae, date: item.date, image: item.image)
-//        return unWrappedCell
-//        
-//    }
-//}
-//
-//class CustomTableViewCell: UITableViewCell {
-//    
-//    
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.boldSystemFont(ofSize: 16)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//    
-//    private let dateLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        label.textColor = .gray
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//    
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        
-//        setupViews()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    private func setupViews() {
-//        contentView.addSubview(titleLabel)
-//        contentView.addSubview(dateLabel)
-//        
-//        setupViewConstraints()
-//    }
-//    
-//    private func setupViewConstraints() {
-//        NSLayoutConstraint.activate([
-//            
-//            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-//            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-//            
-//            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 16),
-//            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-//            
-//        ])
-//    }
-//    
-//    func configure(with title: String, date: String, image: UIImage?) {
-//        titleLabel.text = title
-//        dateLabel.text = date
-//        contentView.backgroundColor = .clear
-//        backgroundView = UIImageView(image: image)
-//    }
-//}
 
+import Foundation
 import UIKit
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -136,6 +19,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.delegate = self
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -144,6 +28,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         loadData()
         setupTableView()
+        navigationItem.title = "History"
     }
     
     private func setupTableView() {
@@ -159,7 +44,6 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private func loadData() {
         data = DataManager.shared.loadResults()
-        print("Loaded data count: \(data.count)") // 디버깅 메시지 추가
         for result in data {
             print("Result: \(result.totalAmount), Date: \(result.date), Image size: \(result.image.size)")
         }
@@ -173,7 +57,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 200 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -182,10 +66,33 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         let item = data[indexPath.row]
-        cell.configure(with: item) { [weak self] in
-            self?.deleteItem(at: indexPath)
-        }
+        cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
         return cell
+    }
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailViewController = DetailViewController()
+        detailViewController.result = data[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteItem(at: indexPath)
+        }
     }
     
     private func deleteItem(at indexPath: IndexPath) {
@@ -195,11 +102,24 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         DataManager.shared.removeResult(item)
     }
 }
+
 class CustomTableViewCell: UITableViewCell {
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 5
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -214,27 +134,17 @@ class CustomTableViewCell: UITableViewCell {
     
     private let resultImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    private let deleteButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("삭제", for: .normal)
-        button.setTitleColor(.red, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    var deleteAction: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
-        
-        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -242,50 +152,40 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(dateLabel)
-        contentView.addSubview(resultImageView)
-        contentView.addSubview(deleteButton)
+        contentView.addSubview(containerView)
+        containerView.addSubview(resultImageView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(dateLabel)
         
         setupViewConstraints()
     }
     
     private func setupViewConstraints() {
         NSLayoutConstraint.activate([
-            resultImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            resultImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            resultImageView.widthAnchor.constraint(equalToConstant: 60),
-            resultImageView.heightAnchor.constraint(equalToConstant: 60),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            titleLabel.leadingAnchor.constraint(equalTo: resultImageView.trailingAnchor, constant: 16),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            resultImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            resultImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            resultImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            // mulplier 주면 총액, 날짜가 더 확실하게 보이는 효과 (선택)
+//            resultImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.6),
+            resultImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
+
             
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -32),
             dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            
-            deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            deleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            dateLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ])
     }
     
-    func configure(with result: CurrencyRecognitionResult, deleteAction: @escaping () -> Void) {
-        titleLabel.text = "\(result.totalAmount)원"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateLabel.text = dateFormatter.string(from: result.date)
-        resultImageView.image = result.image
-        self.deleteAction = deleteAction
-    }
-    
-    @objc private func deleteButtonTapped() {
-        deleteAction?()
+    func configure(with title: String, date: String, image: UIImage?) {
+        titleLabel.text = title
+        dateLabel.text = date
+        resultImageView.image = image
     }
 }
-
-
-
-
-
-
-
