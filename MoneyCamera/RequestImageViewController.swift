@@ -10,6 +10,15 @@ import UIKit
 class RequestImageViewController: UIViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
     
+    private lazy var mainContainer: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 30
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    
     private lazy var moneyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "moneylensIcon")
@@ -114,6 +123,11 @@ class RequestImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "backgroundColor_green")
+        mainContainer.addArrangedSubview(moneyImageView)
+        mainContainer.addArrangedSubview(cameraButton)
+        mainContainer.addArrangedSubview(albumButton)
+        mainContainer.addArrangedSubview(historyButton)
+        
         
         buttonContainer.addArrangedSubview(cameraButton)
         buttonContainer.addArrangedSubview(albumButton)
@@ -123,10 +137,16 @@ class RequestImageViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(buttonContainer)
+        view.addSubview(mainContainer)
+        mainContainer.translatesAutoresizingMaskIntoConstraints = false
+        moneyImageView.translatesAutoresizingMaskIntoConstraints = false
+        cameraButton.translatesAutoresizingMaskIntoConstraints = false
         
         
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
+            mainContainer.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            mainContainer.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             
             moneyImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             moneyImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor, constant: -100),

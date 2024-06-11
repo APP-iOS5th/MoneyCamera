@@ -26,10 +26,10 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupTableView()
         navigationItem.title = "History"
         loadData()
+        setupBackButton()
 
     }
     
@@ -80,13 +80,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - UITableViewDelegate
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        let detailViewController = DetailViewController()
-//        detailViewController.result = data[indexPath.row]
-//        navigationController?.pushViewController(detailViewController, animated: true)
-//    }
-//    
+
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
@@ -103,6 +97,11 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.deleteRows(at: [indexPath], with: .automatic)
         DataManager.shared.removeResult(item)
 
+    }
+    
+    private func setupBackButton() {
+        let backButton = UIBarButtonItem(title: "메인 화면", style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
     }
     
     @objc func backButtonTapped() {
@@ -128,7 +127,6 @@ class CustomTableViewCell: UITableViewCell {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         view.layer.cornerRadius = 10
-//        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
