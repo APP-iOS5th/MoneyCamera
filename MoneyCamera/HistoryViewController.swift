@@ -45,6 +45,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
 
     private func loadData() {
         data = DataManager.shared.loadResults()
+        data.reverse()
         for result in data {
             print("Result: \(result.totalAmount), Date: \(result.date), Image size: \(result.image.size)")
         }
