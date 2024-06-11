@@ -9,13 +9,23 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let rootViewController = UINavigationController(rootViewController: RequestImageViewController())
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
+
+
+//
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        // Override point for customization after application launch.
+//        return true
+//    }
 
     // MARK: UISceneSession Lifecycle
 

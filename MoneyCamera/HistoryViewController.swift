@@ -10,28 +10,28 @@ import UIKit
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    // 데이터 정해지면 수정 예정 
-    private let data:[(itemNmae: String, date: String, image: UIImage?)] = [
-        ("Apple", "2023-06-01", UIImage(systemName: "coloncurrencysign.circle")),
-        ("Banana", "2023-06-02", UIImage(systemName: "coloncurrencysign.circle")),
-        ("Cherry", "2023-06-03", UIImage(systemName: "coloncurrencysign.circle")),
-        ("Date", "2023-06-04", UIImage(systemName: "coloncurrencysign.circle")),
-        ("Elderberry", "2023-06-05", UIImage(systemName: "coloncurrencysign.circle"))
-    ]
+
+    private var data: [CurrencyRecognitionResult] = []
     
-    private lazy var tableView: UITableView = { 
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        loadData()
         setupTableView()
+        navigationItem.title = "History"
+
     }
     
     private func setupTableView() {
@@ -45,36 +45,87 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         ])
     }
     
+
+    private func loadData() {
+        data = DataManager.shared.loadResults()
+        for result in data {
+            print("Result: \(result.totalAmount), Date: \(result.date), Image size: \(result.image.size)")
+        }
+        tableView.reloadData() // 데이터 로드 후 테이블 뷰 갱신
+    }
+    
     // MARK: - UITableViewDataSource
     
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 200 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell
-        let item = data[indexPath.row]
-        guard let unWrappedCell = cell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell else {
             return UITableViewCell()
         }
-
-        unWrappedCell.configure(with: item.itemNmae, date: item.date, image: item.image)
-        return unWrappedCell
         
+        let item = data[indexPath.row]
+        cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
+        return cell
+    }
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailViewController = DetailViewController()
+        detailViewController.result = data[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteItem(at: indexPath)
+        }
+    }
+    
+    private func deleteItem(at indexPath: IndexPath) {
+        let item = data[indexPath.row]
+        data.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        DataManager.shared.removeResult(item)
+
     }
 }
 
 class CustomTableViewCell: UITableViewCell {
     
+    private let containerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 5
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -87,6 +138,14 @@ class CustomTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let resultImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -98,28 +157,44 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(dateLabel)
+        contentView.addSubview(containerView)
+        containerView.addSubview(resultImageView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(dateLabel)
+
         
         setupViewConstraints()
     }
     
     private func setupViewConstraints() {
         NSLayoutConstraint.activate([
+
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            resultImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            resultImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            resultImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            // mulplier 주면 총액, 날짜가 더 확실하게 보이는 효과 (선택)
+//            resultImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.6),
+            resultImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
+
             
-            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 16),
-            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -32),
+            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            dateLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+
         ])
     }
     
     func configure(with title: String, date: String, image: UIImage?) {
         titleLabel.text = title
         dateLabel.text = date
-        contentView.backgroundColor = .clear
-        backgroundView = UIImageView(image: image)
+        resultImageView.image = image
+
     }
 }

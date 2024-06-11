@@ -17,7 +17,11 @@
 		18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */; };
 		18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81F12C16D6A900551ABD /* MoneyEntry.swift */; };
 		B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */; };
-		F4FA7AA92C16D43100961EA2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FA7AA82C16D43100961EA2 /* HistoryViewController.swift */; };
+		B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */; };
+		B8BDF74D2C16D8E100ECE191 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74C2C16D8E100ECE191 /* DataManager.swift */; };
+		B8BDF7512C16E63500ECE191 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */; };
+		B8BDF7532C173A2300ECE191 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7522C173A2300ECE191 /* DetailViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +37,12 @@
 		18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
 		18DD81F12C16D6A900551ABD /* MoneyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyEntry.swift; sourceTree = "<group>"; };
 		B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MixDataObjectDetector.mlmodel; sourceTree = "<group>"; };
-		F4FA7AA82C16D43100961EA2 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+
+		B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRecognitionResult.swift; sourceTree = "<group>"; };
+		B8BDF74C2C16D8E100ECE191 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		B8BDF7522C173A2300ECE191 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +78,13 @@
 				F4FA7AA82C16D43100961EA2 /* HistoryViewController.swift */,
 				1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */,
 				1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */,
+				18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */,
 				1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */,
 				1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */,
-				18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */,
+				B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */,
+				B8BDF74C2C16D8E100ECE191 /* DataManager.swift */,
+				B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */,
+				B8BDF7522C173A2300ECE191 /* DetailViewController.swift */,
 				B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */,
 				1854E1742C0EFCA200E4B5D7 /* Main.storyboard */,
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
@@ -154,9 +167,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */,
+				B8BDF74D2C16D8E100ECE191 /* DataManager.swift in Sources */,
 				1854E1732C0EFCA200E4B5D7 /* RequestImageViewController.swift in Sources */,
+				B8BDF7512C16E63500ECE191 /* HistoryViewController.swift in Sources */,
 				B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */,
 				1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */,
+				B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */,
+				B8BDF7532C173A2300ECE191 /* DetailViewController.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
 				F4FA7AA92C16D43100961EA2 /* HistoryViewController.swift in Sources */,
 				18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */,
@@ -327,7 +344,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.wnyl.MoneyCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yehjinjang.MoneyCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -357,7 +374,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.wnyl.MoneyCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yehjinjang.MoneyCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

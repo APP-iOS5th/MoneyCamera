@@ -22,7 +22,6 @@ class ResultViewController: UITableViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.text = "계산결과"
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,12 +40,10 @@ class ResultViewController: UITableViewController {
         stackView.alignment = .leading
         stackView.distribution = .equalCentering
         
-        
         let totalLabel = UILabel()
         totalLabel.text = "총액"
         totalLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         
-
         priceLabel.text = "\(totalPrice)원"
         priceLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         
@@ -58,7 +55,6 @@ class ResultViewController: UITableViewController {
     }()
     
     private lazy var detailPrice: UIStackView = {
-
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
         mainStackView.spacing = 10
@@ -67,7 +63,6 @@ class ResultViewController: UITableViewController {
         let titleLabel = UILabel()
         titleLabel.text = "세부사항"
         
-        //menuLabel
         let menuLabelStack = UIStackView()
         menuLabelStack.axis = .horizontal
         menuLabelStack.alignment = .center
@@ -88,14 +83,12 @@ class ResultViewController: UITableViewController {
         let fiveThousandStack = createStepperStackView(billNameInt: 5000, initialBillNumberInt: fiveThousandBillInit)
         let oneThousandStack = createStepperStackView(billNameInt: 1000, initialBillNumberInt: oneThousandBillInit)
        
-        
         mainStackView.addArrangedSubview(titleLabel)
         mainStackView.addArrangedSubview(menuLabelStack)
         mainStackView.addArrangedSubview(fiftyThousandStack)
         mainStackView.addArrangedSubview(tenThousandStack)
         mainStackView.addArrangedSubview(fiveThousandStack)
         mainStackView.addArrangedSubview(oneThousandStack)
-        
         
         NSLayoutConstraint.activate([
             menuLabelStack.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
@@ -114,11 +107,9 @@ class ResultViewController: UITableViewController {
             oneThousandStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
         ])
         
-       return mainStackView
+        return mainStackView
     }()
-    
-    
-
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,10 +120,8 @@ class ResultViewController: UITableViewController {
         
         classifyingCurrencies()
         totalAmount()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        VisionObjectRecognitionModel.dictReset()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장하기", style: .plain, target: self, action: #selector(saveTapped))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -144,7 +133,7 @@ class ResultViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -176,7 +165,6 @@ class ResultViewController: UITableViewController {
                 billImage.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
                 billImage.widthAnchor.constraint(equalToConstant: 350),
                 billImage.heightAnchor.constraint(equalToConstant: 350)
-                
             ])
             return cell
         case 2:
@@ -210,7 +198,7 @@ class ResultViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row{
+        switch indexPath.row {
         case 1: return 370
         case 2: return 90
         case 3: return 280
@@ -219,7 +207,6 @@ class ResultViewController: UITableViewController {
     }
     
     private func createStepperStackView(billNameInt: Int, initialBillNumberInt: Int) -> UIStackView {
-        
         let stepperStack = UIStackView()
         stepperStack.axis = .horizontal
         stepperStack.alignment = .center
@@ -236,7 +223,6 @@ class ResultViewController: UITableViewController {
         let billNumber = UILabel()
         billNumber.text = "\(initialBillNumberInt)"
         billNumber.tag = 100
-        
         
         let plusButton = UIButton(type: .custom)
         var config = UIButton.Configuration.filled()
@@ -266,14 +252,13 @@ class ResultViewController: UITableViewController {
     func totalAmount() {
         let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
         totalPrice = totalCurrency
+        priceLabel.text = "\(totalPrice)원"
     }
-
     
     func classifyingCurrencies() {
         for Currency in VisionObjectRecognitionModel.dict {
-            
             switch Currency.key {
-            case "50000won" :
+            case "50000won":
                 fiftyThousandBillInit = Currency.value
             case "10000won":
                 tenThousandBillInit = Currency.value
@@ -298,6 +283,18 @@ class ResultViewController: UITableViewController {
                 priceLabel.text = "\(totalPrice)원"
             }
         }
+    }   
+    @objc private func saveTapped() {
+        guard let selectedImage = selectedImage else { return }
+        
+        let result = CurrencyRecognitionResult(image: selectedImage, totalAmount: "\(totalPrice)", date: Date())
+        DataManager.shared.saveResult(result)
+        
+        let alert = UIAlertController(title: "저장완료", message: "결과가 성공적으로 저장되었습니다.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
+        
+    
+    
     }
 }
-
