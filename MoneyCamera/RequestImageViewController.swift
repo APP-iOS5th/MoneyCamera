@@ -113,8 +113,7 @@ class RequestImageViewController: UIViewController {
     }
     
     @objc func historyTapped() {
-        let historyViewController = HistoryViewController()
-        show(historyViewController, sender: nil)
+        show(HistoryViewController(), sender: nil)
     }
     
 }

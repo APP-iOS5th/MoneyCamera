@@ -10,7 +10,7 @@ import UIKit
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
+    
     private var data: [CurrencyRecognitionResult] = []
     
     private lazy var tableView: UITableView = {
@@ -20,18 +20,18 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
-
+        
         return tableView
     }()
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         loadData()
         setupTableView()
         navigationItem.title = "History"
-
+        setupBackButton()
     }
     
     private func setupTableView() {
@@ -45,7 +45,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         ])
     }
     
-
+    
     private func loadData() {
         data = DataManager.shared.loadResults()
         for result in data {
@@ -56,13 +56,13 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - UITableViewDataSource
     
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200 
+        return 200
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,8 +105,17 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         data.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         DataManager.shared.removeResult(item)
-
+        
     }
+    
+    private func setupBackButton() {
+        let backButton = UIBarButtonItem(title: "메인 화면", style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc func backButtonTapped() {
+             navigationController?.popToRootViewController(animated: true)
+     }
 }
 
 class CustomTableViewCell: UITableViewCell {
