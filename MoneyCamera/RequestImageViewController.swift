@@ -38,7 +38,6 @@ class RequestImageViewController: UIViewController {
         return subtitleLabel
     }()
     
-    
     private lazy var buttonContainer: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -47,7 +46,6 @@ class RequestImageViewController: UIViewController {
         stackView.alignment = .center
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
     
