@@ -15,6 +15,7 @@
 		1854E17B2C0EFCA500E4B5D7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1854E17A2C0EFCA500E4B5D7 /* Base */; };
 		1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */; };
 		18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */; };
+		18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81F12C16D6A900551ABD /* MoneyEntry.swift */; };
 		B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */; };
 		B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */; };
 		B8BDF74D2C16D8E100ECE191 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74C2C16D8E100ECE191 /* DataManager.swift */; };
@@ -33,6 +34,7 @@
 		1854E17C2C0EFCA500E4B5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
+		18DD81F12C16D6A900551ABD /* MoneyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyEntry.swift; sourceTree = "<group>"; };
 		B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MixDataObjectDetector.mlmodel; sourceTree = "<group>"; };
 		B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRecognitionResult.swift; sourceTree = "<group>"; };
 		B8BDF74C2C16D8E100ECE191 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 				1854E1792C0EFCA500E4B5D7 /* LaunchScreen.storyboard */,
 				1854E17C2C0EFCA500E4B5D7 /* Info.plist */,
+				18DD81F12C16D6A900551ABD /* MoneyEntry.swift */,
 			);
 			path = MoneyCamera;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */,
 				B8BDF7532C173A2300ECE191 /* DetailViewController.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
+				18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */,
 				1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +324,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KM8D8UY7M5;
+				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
@@ -350,7 +354,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KM8D8UY7M5;
+				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";

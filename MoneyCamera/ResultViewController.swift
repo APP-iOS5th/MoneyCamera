@@ -109,7 +109,7 @@ class ResultViewController: UITableViewController {
         
         return mainStackView
     }()
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -269,6 +269,7 @@ class ResultViewController: UITableViewController {
             default:
                 break
             }
+            
         }
     }
     
@@ -282,8 +283,7 @@ class ResultViewController: UITableViewController {
                 priceLabel.text = "\(totalPrice)원"
             }
         }
-    }
-    
+    }   
     @objc private func saveTapped() {
         guard let selectedImage = selectedImage else { return }
         
