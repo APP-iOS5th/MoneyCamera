@@ -19,6 +19,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         return tableView
     }()
     
@@ -72,6 +73,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let item = data[indexPath.row]
         cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
+        cell.backgroundColor = .clear
         return cell
     }
     
