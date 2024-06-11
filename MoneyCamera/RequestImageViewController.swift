@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import CoreML
-import Vision
 
 class RequestImageViewController: UIViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
