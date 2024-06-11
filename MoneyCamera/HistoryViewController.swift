@@ -19,18 +19,22 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+//        tableView.backgroundColor = .clear
         return tableView
     }()
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        view.backgroundColor = UIColor(named: "backgroundColor_green")
+
+        
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "buttonIconColor_green")!]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
         setupTableView()
         navigationItem.title = "History"
         loadData()
         setupBackButton()
-
     }
     
     private func setupTableView() {
@@ -54,7 +58,6 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - UITableViewDataSource
     
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -70,18 +73,18 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let item = data[indexPath.row]
         cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
+//        cell.backgroundColor = .clear
         return cell
     }
     
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
         return formatter.string(from: date)
     }
     
     // MARK: - UITableViewDelegate
     
-
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
@@ -97,17 +100,17 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         data.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         DataManager.shared.removeResult(item)
-
     }
     
     private func setupBackButton() {
-        let backButton = UIBarButtonItem(title: "메인 화면", style: .plain, target: self, action: #selector(backButtonTapped))
+        let backButton = UIBarButtonItem(title: "메인화면", style: .plain, target: self, action: #selector(backButtonTapped))
+        backButton.tintColor = UIColor(named: "buttonIconColor_green")
         navigationItem.leftBarButtonItem = backButton
     }
     
     @objc func backButtonTapped() {
-             navigationController?.popToRootViewController(animated: true)
-     }
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 class CustomTableViewCell: UITableViewCell {
@@ -208,10 +211,4 @@ class CustomTableViewCell: UITableViewCell {
         dateLabel.text = date
         resultImageView.image = image
     }
-}
-
-private func formattedDate(_ date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-    return formatter.string(from: date)
 }

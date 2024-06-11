@@ -32,6 +32,7 @@ class RequestImageViewController: UIViewController {
         titleLabel.text = "MoneyLens"
         titleLabel.font = UIFont(name: "Pretendard-Bold", size: 40)
         titleLabel.textColor = UIColor(named: "buttonIconColor_green")
+//        titleLabel.textColor = .gray
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
@@ -42,6 +43,7 @@ class RequestImageViewController: UIViewController {
         subtitleLabel.text = "Lion LAB 7"
         subtitleLabel.font = UIFont(name: "Pretendard-Bold", size: 8)
         subtitleLabel.textColor = UIColor(named: "subtitleColor")
+//        subtitleLabel.textColor = .lightGray
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         return subtitleLabel
@@ -64,6 +66,7 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "camera.fill", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
+//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -84,6 +87,7 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "photo.fill", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
+//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -105,6 +109,7 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "list.bullet", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
+//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -122,6 +127,7 @@ class RequestImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        view.backgroundColor = .white
         view.backgroundColor = UIColor(named: "backgroundColor_green")
         mainContainer.addArrangedSubview(moneyImageView)
         mainContainer.addArrangedSubview(cameraButton)
