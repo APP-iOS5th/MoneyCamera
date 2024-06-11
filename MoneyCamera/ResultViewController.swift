@@ -224,24 +224,26 @@ class ResultViewController: UITableViewController {
         billNumber.text = "\(initialBillNumberInt)"
         billNumber.tag = 100
         
-        let plusButton = UIButton(type: .custom)
+        let minusButton = UIButton(type: .custom) 
         var config = UIButton.Configuration.filled()
-        config.title = "+"
-        plusButton.configuration = config
-        plusButton.addAction(UIAction { [weak self] _ in
-            self?.updateBillNumber(for: billNumStack, increment: 1, billValue: billNameInt)
-        }, for: .touchUpInside)
-        
-        let minusButton = UIButton(type: .custom)
         config.title = "-"
+        config.baseBackgroundColor = UIColor(named: "buttonIconColor_green")
         minusButton.configuration = config
         minusButton.addAction(UIAction { [weak self] _ in
             self?.updateBillNumber(for: billNumStack, increment: -1, billValue: billNameInt)
         }, for: .touchUpInside)
         
-        billNumStack.addArrangedSubview(plusButton)
-        billNumStack.addArrangedSubview(billNumber)
+        let plusButton = UIButton(type: .custom)
+        config.title = "+"
+        config.baseBackgroundColor = UIColor(named: "buttonIconColor_green")
+        plusButton.configuration = config
+        plusButton.addAction(UIAction { [weak self] _ in
+            self?.updateBillNumber(for: billNumStack, increment: 1, billValue: billNameInt)
+        }, for: .touchUpInside)
+        
         billNumStack.addArrangedSubview(minusButton)
+        billNumStack.addArrangedSubview(billNumber)
+        billNumStack.addArrangedSubview(plusButton)
         
         stepperStack.addArrangedSubview(billName)
         stepperStack.addArrangedSubview(billNumStack)
