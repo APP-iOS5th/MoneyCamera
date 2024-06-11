@@ -274,7 +274,7 @@ class ResultViewController: UITableViewController {
     }
     
     func updateBillNumber(for stackView: UIStackView, increment: Int, billValue: Int) {
-        if let billNumberLabel = stackView.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100 }) as? UILabel,
+        if let billNumberLabel = stackView.viewWithTag(100) as? UILabel,
            let currentNumber = Int(billNumberLabel.text ?? "0") {
             let newNumber = currentNumber + increment
             if newNumber >= 0 {
