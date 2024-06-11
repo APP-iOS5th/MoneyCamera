@@ -115,14 +115,6 @@ class ResultViewController: UITableViewController {
         
         view.backgroundColor = UIColor(named: "backgroundColor_green")
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "buttonIconColor_green") ?? .white,
-            .font: UIFont.systemFont(ofSize: 18, weight: .bold)
-        ]
         self.title = "MoneyLens"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
