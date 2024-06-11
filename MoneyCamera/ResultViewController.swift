@@ -113,8 +113,8 @@ class ResultViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        self.title = "얼마에요"
+        view.backgroundColor = UIColor(named: "backgroundColor_green")
+        self.title = "MoneyLens"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
