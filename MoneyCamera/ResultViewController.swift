@@ -113,8 +113,8 @@ class ResultViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        self.title = "얼마에요"
+        view.backgroundColor = UIColor(named: "backgroundColor_green")
+        self.title = "MoneyLens"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
@@ -274,7 +274,7 @@ class ResultViewController: UITableViewController {
     }
     
     func updateBillNumber(for stackView: UIStackView, increment: Int, billValue: Int) {
-        if let billNumberLabel = stackView.arrangedSubviews.first(where: { $0 is UILabel && $0.tag == 100 }) as? UILabel,
+        if let billNumberLabel = stackView.viewWithTag(100) as? UILabel,
            let currentNumber = Int(billNumberLabel.text ?? "0") {
             let newNumber = currentNumber + increment
             if newNumber >= 0 {
@@ -283,7 +283,8 @@ class ResultViewController: UITableViewController {
                 priceLabel.text = "\(totalPrice)원"
             }
         }
-    }   
+    }
+    
     @objc private func saveTapped() {
         guard let selectedImage = selectedImage else { return }
 
@@ -292,9 +293,11 @@ class ResultViewController: UITableViewController {
         let result = CurrencyRecognitionResult(totalAmount: totalAmount, date: Date(), image: selectedImage)
         DataManager.shared.saveResult(result)
 
+
         let alert = UIAlertController(title: "저장 완료", message: "결과가 성공적으로 저장되었습니다.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     
+
     }
 }

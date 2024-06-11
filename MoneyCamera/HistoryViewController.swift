@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+
     private var data: [CurrencyRecognitionResult] = []
     
     private lazy var tableView: UITableView = {
@@ -22,11 +22,15 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         return tableView
     }()
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupTableView()
         navigationItem.title = "History"
         loadData()
+
     }
     
     private func setupTableView() {
@@ -38,7 +42,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     private func loadData() {
         data = DataManager.shared.loadResults()
         for result in data {
@@ -49,6 +53,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - UITableViewDataSource
     
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -97,7 +102,12 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         data.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         DataManager.shared.removeResult(item)
+
     }
+    
+    @objc func backButtonTapped() {
+             navigationController?.popToRootViewController(animated: true)
+     }
 }
 
 class CustomTableViewCell: UITableViewCell {
