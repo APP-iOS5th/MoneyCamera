@@ -114,6 +114,7 @@ class ResultViewController: UITableViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(named: "backgroundColor_green")
+        
         self.title = "MoneyLens"
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
