@@ -6,37 +6,38 @@
 //
 
 
+import Foundation
 import UIKit
 
-class CurrencyRecognitionResult: NSObject, NSCoding {
-    var image: UIImage
-    var totalAmount: String
-    var date: Date
+class CurrencyRecognitionResult: NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool {
+        return true
+    }
     
-    init(image: UIImage, totalAmount: String, date: Date) {
-        self.image = image
+    let totalAmount: String
+    let date: Date
+    let image: UIImage
+    
+    init(totalAmount: String, date: Date, image: UIImage) {
         self.totalAmount = totalAmount
         self.date = date
+        self.image = image
     }
     
-    func encode(with coder: NSCoder) {
-        if let jpegData = image.jpegData(compressionQuality: 1.0) {
-            coder.encode(jpegData, forKey: "image")
-        }
-        coder.encode(totalAmount, forKey: "totalAmount")
-        coder.encode(date, forKey: "date")
-    }
-    
-    required init?(coder: NSCoder) {
-        guard let imageData = coder.decodeObject(forKey: "image") as? Data,
-              let image = UIImage(data: imageData),
-              let totalAmount = coder.decodeObject(forKey: "totalAmount") as? String,
-              let date = coder.decodeObject(forKey: "date") as? Date else {
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let totalAmount = aDecoder.decodeObject(of: NSString.self, forKey: "totalAmount") as String?,
+              let date = aDecoder.decodeObject(of: NSDate.self, forKey: "date") as Date?,
+              let imageData = aDecoder.decodeObject(of: NSData.self, forKey: "image") as Data?,
+              let image = UIImage(data: imageData) else {
             return nil
         }
-        self.image = image
-        self.totalAmount = totalAmount
-        self.date = date
+        
+        self.init(totalAmount: totalAmount, date: date, image: image)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(totalAmount, forKey: "totalAmount")
+        aCoder.encode(date as NSDate, forKey: "date")
+        aCoder.encode(image.pngData() as NSData?, forKey: "image")
     }
 }
-

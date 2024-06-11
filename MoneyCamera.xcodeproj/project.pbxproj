@@ -28,7 +28,7 @@
 		B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */; };
 		B8BDF74D2C16D8E100ECE191 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF74C2C16D8E100ECE191 /* DataManager.swift */; };
 		B8BDF7512C16E63500ECE191 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */; };
-		B8BDF7532C173A2300ECE191 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7522C173A2300ECE191 /* DetailViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 		B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRecognitionResult.swift; sourceTree = "<group>"; };
 		B8BDF74C2C16D8E100ECE191 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		B8BDF7522C173A2300ECE191 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,6 @@
 				B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */,
 				B8BDF74C2C16D8E100ECE191 /* DataManager.swift */,
 				B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */,
-				B8BDF7522C173A2300ECE191 /* DetailViewController.swift */,
 				B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */,
 				1854E1742C0EFCA200E4B5D7 /* Main.storyboard */,
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
@@ -210,7 +209,6 @@
 				B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */,
 				1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */,
 				B8BDF74B2C16D8C300ECE191 /* CurrencyRecognitionResult.swift in Sources */,
-				B8BDF7532C173A2300ECE191 /* DetailViewController.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
 				1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */,
 			);
@@ -364,7 +362,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
+				DEVELOPMENT_TEAM = KM8D8UY7M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
@@ -394,7 +392,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2G8RK4H3ZB;
+				DEVELOPMENT_TEAM = KM8D8UY7M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoneyCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사용자의 카메라를 사용합니다.";
