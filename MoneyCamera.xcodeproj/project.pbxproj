@@ -15,7 +15,6 @@
 		1854E17B2C0EFCA500E4B5D7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1854E17A2C0EFCA500E4B5D7 /* Base */; };
 		1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */; };
 		18DD81F02C16B62E00551ABD /* VisionObjectRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */; };
-		18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD81F12C16D6A900551ABD /* MoneyEntry.swift */; };
 		B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		1854E17C2C0EFCA500E4B5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
-		18DD81F12C16D6A900551ABD /* MoneyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyEntry.swift; sourceTree = "<group>"; };
 		B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MixDataObjectDetector.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,7 +72,6 @@
 				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 				1854E1792C0EFCA500E4B5D7 /* LaunchScreen.storyboard */,
 				1854E17C2C0EFCA500E4B5D7 /* Info.plist */,
-				18DD81F12C16D6A900551ABD /* MoneyEntry.swift */,
 			);
 			path = MoneyCamera;
 			sourceTree = "<group>";
@@ -155,7 +152,6 @@
 				B8BDF7492C16C03100ECE191 /* MixDataObjectDetector.mlmodel in Sources */,
 				1854E16F2C0EFCA200E4B5D7 /* AppDelegate.swift in Sources */,
 				1854E1712C0EFCA200E4B5D7 /* SceneDelegate.swift in Sources */,
-				18DD81F22C16D6A900551ABD /* MoneyEntry.swift in Sources */,
 				1854E1832C0F07C400E4B5D7 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
