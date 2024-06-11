@@ -9,6 +9,7 @@
 ## Skills
 - UIKit
 - GitHub
+- CreateML
 
 ## Team
 
