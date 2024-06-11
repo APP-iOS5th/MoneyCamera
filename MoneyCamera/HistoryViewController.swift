@@ -5,12 +5,12 @@
 //  Created by changhyen yun on 6/10/24.
 //
 
-
 import Foundation
 import UIKit
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+
     private var data: [CurrencyRecognitionResult] = []
     
     private lazy var tableView: UITableView = {
@@ -20,15 +20,18 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         loadData()
         setupTableView()
         navigationItem.title = "History"
+
     }
     
     private func setupTableView() {
@@ -42,6 +45,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         ])
     }
     
+
     private func loadData() {
         data = DataManager.shared.loadResults()
         for result in data {
@@ -52,6 +56,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - UITableViewDataSource
     
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -100,6 +105,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         data.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         DataManager.shared.removeResult(item)
+
     }
 }
 
@@ -140,7 +146,6 @@ class CustomTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -156,12 +161,14 @@ class CustomTableViewCell: UITableViewCell {
         containerView.addSubview(resultImageView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(dateLabel)
+
         
         setupViewConstraints()
     }
     
     private func setupViewConstraints() {
         NSLayoutConstraint.activate([
+
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -180,6 +187,7 @@ class CustomTableViewCell: UITableViewCell {
             dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             dateLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+
         ])
     }
     
@@ -187,5 +195,6 @@ class CustomTableViewCell: UITableViewCell {
         titleLabel.text = title
         dateLabel.text = date
         resultImageView.image = image
+
     }
 }
