@@ -19,14 +19,14 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+//        tableView.backgroundColor = .clear
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "backgroundColor_green")
+//        view.backgroundColor = UIColor(named: "backgroundColor_green")
 
         
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "buttonIconColor_green")!]
@@ -73,7 +73,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let item = data[indexPath.row]
         cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
-        cell.backgroundColor = .clear
+//        cell.backgroundColor = .clear
         return cell
     }
     
