@@ -286,15 +286,15 @@ class ResultViewController: UITableViewController {
     }   
     @objc private func saveTapped() {
         guard let selectedImage = selectedImage else { return }
-        
-        let result = CurrencyRecognitionResult(image: selectedImage, totalAmount: "\(totalPrice)", date: Date())
+
+        let totalAmount = "\(totalPrice)"
+
+        let result = CurrencyRecognitionResult(totalAmount: totalAmount, date: Date(), image: selectedImage)
         DataManager.shared.saveResult(result)
-        
-        let alert = UIAlertController(title: "저장완료", message: "결과가 성공적으로 저장되었습니다.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alert, animated: true)
-        
-    
+
+        let alert = UIAlertController(title: "저장 완료", message: "결과가 성공적으로 저장되었습니다.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     
     }
 }
