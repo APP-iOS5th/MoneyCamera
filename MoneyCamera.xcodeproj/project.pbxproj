@@ -49,6 +49,10 @@
 		18B9B5092C1811C900EC1FF4 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		18B9B50A2C1811CA00EC1FF4 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		18B9B50B2C1811CA00EC1FF4 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		18C3EAE52C1932F0003A6738 /* NanumSquareRoundOTFB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundOTFB.otf; sourceTree = "<group>"; };
+		18C3EAE62C1932F8003A6738 /* NanumSquareRoundOTFEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundOTFEB.otf; sourceTree = "<group>"; };
+		18C3EAE72C193307003A6738 /* NanumSquareRoundOTFR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundOTFR.otf; sourceTree = "<group>"; };
+		18C3EAE82C193AA4003A6738 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
 		B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MixDataObjectDetector.mlmodel; sourceTree = "<group>"; };
 		B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRecognitionResult.swift; sourceTree = "<group>"; };
@@ -116,6 +120,10 @@
 				18B9B5072C1811C900EC1FF4 /* Pretendard-Regular.otf */,
 				18B9B50A2C1811CA00EC1FF4 /* Pretendard-SemiBold.otf */,
 				18B9B5032C1811C900EC1FF4 /* Pretendard-Thin.otf */,
+				18C3EAE62C1932F8003A6738 /* NanumSquareRoundOTFEB.otf */,
+				18C3EAE52C1932F0003A6738 /* NanumSquareRoundOTFB.otf */,
+				18C3EAE72C193307003A6738 /* NanumSquareRoundOTFR.otf */,
+				18C3EAE82C193AA4003A6738 /* NanumSquareRoundB.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";

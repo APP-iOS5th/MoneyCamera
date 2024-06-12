@@ -13,6 +13,10 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Medium.otf</string>
 		<string>Pretendard-Regular.otf</string>
+		<string>NanumSquareRoundOTFEB.otf</string>
+		<string>NanumSquareRoundOTFB.otf</string>
+		<string>NanumSquareRoundOTFR.otf</string>
+		<string>NanumSquareRoundB.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
