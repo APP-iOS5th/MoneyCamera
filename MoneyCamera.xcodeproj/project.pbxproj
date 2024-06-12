@@ -70,7 +70,6 @@
 		1854E1622C0EFCA200E4B5D7 = {
 			isa = PBXGroup;
 			children = (
-				18B9B5022C18117F00EC1FF4 /* Font */,
 				1854E16D2C0EFCA200E4B5D7 /* MoneyCamera */,
 				1854E16C2C0EFCA200E4B5D7 /* Products */,
 			);
@@ -87,19 +86,13 @@
 		1854E16D2C0EFCA200E4B5D7 /* MoneyCamera */ = {
 			isa = PBXGroup;
 			children = (
-				1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */,
-				1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */,
-				18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */,
-				1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */,
-				1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */,
-				B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */,
-				B8BDF74C2C16D8E100ECE191 /* DataManager.swift */,
-				B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */,
-				B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */,
+				18B9B5022C18117F00EC1FF4 /* Font */,
+				B8D308BC2C1932AB0081C2ED /* Controllers */,
+				B8D308BB2C1932690081C2ED /* Models */,
 				1854E1742C0EFCA200E4B5D7 /* Main.storyboard */,
-				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 				1854E1792C0EFCA500E4B5D7 /* LaunchScreen.storyboard */,
 				1854E17C2C0EFCA500E4B5D7 /* Info.plist */,
+				1854E1772C0EFCA500E4B5D7 /* Assets.xcassets */,
 			);
 			path = MoneyCamera;
 			sourceTree = "<group>";
@@ -118,6 +111,29 @@
 				18B9B5032C1811C900EC1FF4 /* Pretendard-Thin.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		B8D308BB2C1932690081C2ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B8BDF74A2C16D8C300ECE191 /* CurrencyRecognitionResult.swift */,
+				18DD81EF2C16B62E00551ABD /* VisionObjectRecognition.swift */,
+				B8BDF74C2C16D8E100ECE191 /* DataManager.swift */,
+				B8BDF7482C16C03100ECE191 /* MixDataObjectDetector.mlmodel */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B8D308BC2C1932AB0081C2ED /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1854E16E2C0EFCA200E4B5D7 /* AppDelegate.swift */,
+				1854E1702C0EFCA200E4B5D7 /* SceneDelegate.swift */,
+				1854E1722C0EFCA200E4B5D7 /* RequestImageViewController.swift */,
+				1854E1822C0F07C400E4B5D7 /* ResultViewController.swift */,
+				B8BDF7502C16E63500ECE191 /* HistoryViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
