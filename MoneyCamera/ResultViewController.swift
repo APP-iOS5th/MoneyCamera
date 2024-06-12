@@ -46,10 +46,10 @@ class ResultViewController: UITableViewController {
         
         let totalLabel = UILabel()
         totalLabel.text = "총액"
-        totalLabel.font = UIFont(name: "Pretendard-Regular", size: 35)
+        totalLabel.font = UIFont(name: "Pretendard-Regular", size: 33)
         
         priceLabel.text = "\(totalPrice)원"
-        priceLabel.font = UIFont(name: "Pretendard-Medium", size: 35)
+        priceLabel.font = UIFont(name: "Pretendard-Medium", size: 33)
         
         stackView.addArrangedSubview(totalLabel)
         stackView.addArrangedSubview(priceLabel)
