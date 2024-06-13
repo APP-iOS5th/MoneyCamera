@@ -225,11 +225,6 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true){() in
-            let alert = UIAlertController(title: "", message: "이미지 선택이 취소되었습니다", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
-            self.present(alert, animated: false)
-        }
+        dismiss(animated: true)
     }
 }
