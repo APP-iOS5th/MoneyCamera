@@ -122,10 +122,6 @@ class RequestImageViewController: UIViewController {
         view.addSubview(subtitleLabel)
         view.addSubview(buttonContainer)
         
-        lensLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             
@@ -174,12 +170,7 @@ class RequestImageViewController: UIViewController {
 // 사진 선택 후
 extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        
-        
         guard let userPickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             fatalError("Failed Original Image pick")
         }
@@ -192,7 +183,6 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
         VisionObjectRecognitionModel.VisonHandler(image: coreImage)
         
         picker.dismiss(animated: true){
-            
             let resultViewController = ResultViewController()
             resultViewController.selectedImage = userPickedImage
             self.navigationController?.pushViewController(resultViewController, animated: true)
