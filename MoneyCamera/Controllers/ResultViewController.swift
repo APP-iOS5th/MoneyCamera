@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultViewController: UITableViewController {
+class ResultViewController: UIViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
     var selectedImage: UIImage?
     
@@ -15,24 +15,41 @@ class ResultViewController: UITableViewController {
     var tenThousandBillInit = 0
     var fiveThousandBillInit = 0
     var oneThousandBillInit = 0
-    var totalPrice = 0
+    
     let priceLabel = UILabel()
+    var totalPrice = 0 {
+        didSet{
+            priceLabel.text = "\(totalPrice)원"
+        }
+    }
+    
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "계산결과"
-        label.font = UIFont(name: "Pretendard-Regular", size: 20)
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     
-    private lazy var billImage: UIImageView = {
+    private lazy var billImageView: UIImageView = {
         let imageView = UIImageView()
+        
+        if let image = selectedImage {
+            imageView.image = image
+        } else {
+            billImageView.image = UIImage(systemName: "questionmark.folder")
+        }
+        
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 330),
+            imageView.heightAnchor.constraint(equalToConstant: 330)
+        ])
         
         return imageView
     }()
@@ -40,7 +57,6 @@ class ResultViewController: UITableViewController {
     private lazy var totalPriceStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 10
         stackView.alignment = .bottom
         stackView.distribution = .equalSpacing
         
@@ -58,10 +74,10 @@ class ResultViewController: UITableViewController {
         return stackView
     }()
     
-    private lazy var detailPrice: UIStackView = {
+    private lazy var detailPriceStack: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
-        mainStackView.spacing = 15
+        mainStackView.spacing = 18
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let fiftyThousandStack = createStepperStackView(billNameString:"오만원" ,billNameInt: 50000, initialBillNumberInt: fiftyThousandBillInit)
@@ -90,28 +106,84 @@ class ResultViewController: UITableViewController {
         
         return mainStackView
     }()
+    
+    let backgroundRect: UIView = {
+        let rect = UIView()
+        rect.backgroundColor = .white
+        rect.layer.cornerRadius = 5
+        rect.layer.masksToBounds = true
+        rect.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            rect.widthAnchor.constraint(equalToConstant: 360),
+            rect.heightAnchor.constraint(equalToConstant: 660)
+        ])
+        return rect
+    }()
+    
+    let lineImageView: UIImageView = {
+        let line = UIImageView()
+        line.image = UIImage(named: "lineGray")
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        return line
+    }()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor(named: "backgroundColor_green")
+        
+        classifyingCurrencies()
+        totalAmount()
+        
+        view.addSubview(backgroundRect)
+        view.addSubview(titleLabel)
+        view.addSubview(billImageView)
+        view.addSubview(totalPriceStack)
+        view.addSubview(lineImageView)
+        view.addSubview(detailPriceStack)
+        
+        
+        
+        let safeArea = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            backgroundRect.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 15),
+            backgroundRect.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: backgroundRect.topAnchor, constant: 15),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            billImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            billImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            totalPriceStack.topAnchor.constraint(equalTo: billImageView.bottomAnchor, constant: 15),
+            totalPriceStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            totalPriceStack.leadingAnchor.constraint(equalTo: backgroundRect.leadingAnchor, constant: 20),
+            totalPriceStack.trailingAnchor.constraint(equalTo: backgroundRect.trailingAnchor, constant: -20),
+            
+            lineImageView.topAnchor.constraint(equalTo: totalPriceStack.bottomAnchor, constant: 5),
+            lineImageView.leadingAnchor.constraint(equalTo: backgroundRect.leadingAnchor, constant: 20),
+            lineImageView.trailingAnchor.constraint(equalTo: backgroundRect.trailingAnchor, constant: -20),
+            
+            detailPriceStack.topAnchor.constraint(equalTo: lineImageView.bottomAnchor, constant: 15),
+            detailPriceStack.bottomAnchor.constraint(equalTo: backgroundRect.bottomAnchor, constant: -17),
+            detailPriceStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailPriceStack.leadingAnchor.constraint(equalTo: backgroundRect.leadingAnchor, constant: 20),
+            detailPriceStack.trailingAnchor.constraint(equalTo: backgroundRect.trailingAnchor, constant: -20)
+        
+        ])
+        
         
         self.title = "MoneyLens"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "darkgreen") ?? .black]
         self.navigationController?.navigationBar.tintColor = UIColor(named: "buttonIconColor_green")
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
         
-        classifyingCurrencies()
-        totalAmount()
         
         let saveButton = UIBarButtonItem(title: "저장하기", style: .plain, target: self, action: #selector(saveTapped))
         saveButton.tintColor = UIColor(named: "buttonIconColor_green")
         navigationItem.rightBarButtonItem = saveButton
-        
         
         
     }
@@ -120,149 +192,9 @@ class ResultViewController: UITableViewController {
         VisionObjectRecognitionModel.dictReset()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.selectionStyle = .none
-            cell.backgroundColor = UIColor(named: "backgroundColor_green")
-            
-            let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.translatesAutoresizingMaskIntoConstraints = false
-            
-            cell.contentView.addSubview(squareView)
-            cell.contentView.addSubview(titleLabel)
-            
-            NSLayoutConstraint.activate([
-                squareView.widthAnchor.constraint(equalToConstant: 360),
-                squareView.heightAnchor.constraint(equalToConstant: 40),
-                squareView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-                squareView.topAnchor.constraint(equalTo: cell.topAnchor, constant: 20),
-                
-                titleLabel.topAnchor.constraint(equalTo: squareView.topAnchor, constant: 15),
-                titleLabel.centerXAnchor.constraint(equalTo: squareView.centerXAnchor)
-            ])
-            return cell
-            
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.selectionStyle = .none
-            cell.backgroundColor = UIColor(named: "backgroundColor_green")
-            
-            
-            if let image = selectedImage {
-                billImage.image = image
-            } else {
-                billImage.image = UIImage(systemName: "questionmark.folder")
-            }
-            
-            let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.translatesAutoresizingMaskIntoConstraints = false
-            
 
-            cell.contentView.addSubview(squareView)
-            cell.contentView.addSubview(billImage)
+    
 
-            
-            NSLayoutConstraint.activate([
-                squareView.widthAnchor.constraint(equalToConstant: 360),
-                squareView.heightAnchor.constraint(equalToConstant: 360),
-                squareView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-                squareView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                
-                billImage.centerXAnchor.constraint(equalTo: squareView.centerXAnchor),
-                billImage.topAnchor.constraint(equalTo: squareView.topAnchor, constant: 10),
-                billImage.widthAnchor.constraint(equalToConstant: 330),
-                billImage.heightAnchor.constraint(equalToConstant: 330)
-            ])
-            return cell
-            
-        case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.selectionStyle = .none
-            cell.backgroundColor = UIColor(named: "backgroundColor_green")
-            
-            let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.translatesAutoresizingMaskIntoConstraints = false
-            
-            let lineImage = UIImageView()
-            lineImage.image = UIImage(named: "lineGray")
-            lineImage.translatesAutoresizingMaskIntoConstraints = false
-            
-            cell.contentView.addSubview(squareView)
-            cell.contentView.addSubview(totalPriceStack)
-            cell.contentView.addSubview(lineImage)
-            
-            
-            NSLayoutConstraint.activate([
-                squareView.widthAnchor.constraint(equalToConstant: 360),
-                squareView.heightAnchor.constraint(equalToConstant: 70),
-                squareView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-                squareView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                
-                totalPriceStack.topAnchor.constraint(equalTo: squareView.topAnchor),
-                totalPriceStack.leadingAnchor.constraint(equalTo: squareView.leadingAnchor, constant: 20),
-                totalPriceStack.trailingAnchor.constraint(equalTo: squareView.trailingAnchor, constant:  -20),
-                
-                lineImage.bottomAnchor.constraint(equalTo: totalPriceStack.bottomAnchor, constant: 15),
-                lineImage.leadingAnchor.constraint(equalTo: squareView.leadingAnchor, constant: 15),
-                lineImage.trailingAnchor.constraint(equalTo: squareView.trailingAnchor, constant: -15),
-                lineImage.heightAnchor.constraint(equalToConstant: 2)
-            ])
-            return cell
-            
-        case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.selectionStyle = .none
-            cell.backgroundColor = UIColor(named: "backgroundColor_green")
-            
-            let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.translatesAutoresizingMaskIntoConstraints = false
-            
-            
-            cell.contentView.addSubview(squareView)
-            cell.contentView.addSubview(detailPrice)
-            
-            
-            NSLayoutConstraint.activate([
-                squareView.widthAnchor.constraint(equalToConstant: 360),
-                squareView.heightAnchor.constraint(equalToConstant: 200),
-                squareView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-                squareView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                
-                detailPrice.topAnchor.constraint(equalTo: squareView.topAnchor,constant: 5),
-                detailPrice.leadingAnchor.constraint(equalTo: squareView.leadingAnchor, constant: 20),
-                detailPrice.trailingAnchor.constraint(equalTo: squareView.trailingAnchor, constant: -20)
-            ])
-            return cell
-            
-        default:
-            return tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0: return 60
-        case 1: return 360
-        case 2: return 70
-        case 3: return 200
-        default: return 0
-        }
-    }
-    
     private func createStepperStackView(billNameString: String, billNameInt: Int, initialBillNumberInt: Int) -> UIStackView {
         let stepperStack = UIStackView()
         stepperStack.axis = .horizontal
@@ -360,8 +292,6 @@ class ResultViewController: UITableViewController {
         let result = CurrencyRecognitionResult(totalAmount: totalAmount, date: Date(), image: selectedImage)
         DataManager.shared.saveResult(result)
         show(HistoryViewController(), sender: nil)
-    
-    
 
     }
 }

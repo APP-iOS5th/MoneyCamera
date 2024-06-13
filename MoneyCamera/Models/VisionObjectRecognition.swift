@@ -71,8 +71,8 @@ class VisionObjectRecognition {
             }
             // Select only the label with the highest confidence.
             let topLabelObservation = objectObservation.labels[0]
-            print(topLabelObservation.identifier)
-            print(topLabelObservation.confidence)
+//            print(topLabelObservation.identifier)
+//            print(topLabelObservation.confidence)
             addCount(key: topLabelObservation.identifier)
             _ = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
         }

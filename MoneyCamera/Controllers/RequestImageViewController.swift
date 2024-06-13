@@ -10,16 +10,7 @@ import UIKit
 class RequestImageViewController: UIViewController {
     let VisionObjectRecognitionModel = VisionObjectRecognition.shared
     
-    private lazy var mainContainer: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 30
-        stackView.alignment = .center
-        return stackView
-    }()
-    
-    
-    private lazy var moneyImageView: UIImageView = {
+    private lazy var lensLogoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "moneylensIcon")
         imageView.contentMode = .scaleAspectFit
@@ -32,8 +23,6 @@ class RequestImageViewController: UIViewController {
         titleLabel.text = "MoneyLens"
         titleLabel.font = UIFont(name: "Pretendard-Bold", size: 40)
         titleLabel.textColor = UIColor(named: "buttonIconColor_green")
-//        titleLabel.textColor = .gray
-        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
@@ -43,8 +32,6 @@ class RequestImageViewController: UIViewController {
         subtitleLabel.text = "Lion LAB 7"
         subtitleLabel.font = UIFont(name: "Pretendard-Bold", size: 8)
         subtitleLabel.textColor = UIColor(named: "subtitleColor")
-//        subtitleLabel.textColor = .lightGray
-        
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         return subtitleLabel
     }()
@@ -66,7 +53,6 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "camera.fill", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
-//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -87,7 +73,6 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "photo.fill", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
-//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -109,7 +94,6 @@ class RequestImageViewController: UIViewController {
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 20)
         config.image = UIImage(systemName: "list.bullet", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
-//        config.baseForegroundColor = .green
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         button.configuration = config
         button.layer.cornerRadius = 30
@@ -127,45 +111,32 @@ class RequestImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .white
         view.backgroundColor = UIColor(named: "backgroundColor_green")
-        mainContainer.addArrangedSubview(moneyImageView)
-        mainContainer.addArrangedSubview(cameraButton)
-        mainContainer.addArrangedSubview(albumButton)
-        mainContainer.addArrangedSubview(historyButton)
-        
         
         buttonContainer.addArrangedSubview(cameraButton)
         buttonContainer.addArrangedSubview(albumButton)
         buttonContainer.addArrangedSubview(historyButton)
         
-        view.addSubview(moneyImageView)
+        view.addSubview(lensLogoImageView)
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(buttonContainer)
-        view.addSubview(mainContainer)
-        mainContainer.translatesAutoresizingMaskIntoConstraints = false
-        moneyImageView.translatesAutoresizingMaskIntoConstraints = false
-        cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        
         
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            mainContainer.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            mainContainer.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             
-            moneyImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            moneyImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor, constant: -100),
-            moneyImageView.widthAnchor.constraint(equalToConstant: 280),
-            moneyImageView.heightAnchor.constraint(equalToConstant: 280),
+            lensLogoImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            lensLogoImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor, constant: -100),
+            lensLogoImageView.widthAnchor.constraint(equalToConstant: 280),
+            lensLogoImageView.heightAnchor.constraint(equalToConstant: 280),
             
-            titleLabel.centerXAnchor.constraint(equalTo: moneyImageView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: moneyImageView.centerYAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: lensLogoImageView.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: lensLogoImageView.centerYAnchor),
             
-            subtitleLabel.trailingAnchor.constraint(equalTo: moneyImageView.trailingAnchor, constant: -33),
-            subtitleLabel.bottomAnchor.constraint(equalTo: moneyImageView.bottomAnchor,constant: -30),
+            subtitleLabel.trailingAnchor.constraint(equalTo: lensLogoImageView.trailingAnchor, constant: -33),
+            subtitleLabel.bottomAnchor.constraint(equalTo: lensLogoImageView.bottomAnchor,constant: -30),
             
-            buttonContainer.topAnchor.constraint(equalTo: moneyImageView.bottomAnchor, constant: 30),
+            buttonContainer.topAnchor.constraint(equalTo: lensLogoImageView.bottomAnchor, constant: 30),
             buttonContainer.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
         
@@ -199,12 +170,7 @@ class RequestImageViewController: UIViewController {
 // 사진 선택 후
 extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        
-        
         guard let userPickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             fatalError("Failed Original Image pick")
         }
@@ -217,7 +183,6 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
         VisionObjectRecognitionModel.VisonHandler(image: coreImage)
         
         picker.dismiss(animated: true){
-            
             let resultViewController = ResultViewController()
             resultViewController.selectedImage = userPickedImage
             self.navigationController?.pushViewController(resultViewController, animated: true)
