@@ -19,15 +19,11 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "CustomTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
-//        tableView.backgroundColor = .clear
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        view.backgroundColor = UIColor(named: "backgroundColor_green")
-
         
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "buttonIconColor_green")!]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -50,9 +46,6 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     private func loadData() {
         data = DataManager.shared.loadResults()
         data.reverse()
-        for result in data {
-            print("Result: \(result.totalAmount), Date: \(result.date), Image size: \(result.image.size)")
-        }
         tableView.reloadData() // 데이터 로드 후 테이블 뷰 갱신
     }
     
@@ -73,7 +66,6 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let item = data[indexPath.row]
         cell.configure(with: "\(item.totalAmount)원", date: formattedDate(item.date), image: item.image)
-//        cell.backgroundColor = .clear
         return cell
     }
     
