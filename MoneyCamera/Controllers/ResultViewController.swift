@@ -18,8 +18,13 @@ class ResultViewController: UIViewController {
     
     let priceLabel = UILabel()
     var totalPrice = 0 {
-        didSet{
-            priceLabel.text = "\(totalPrice)원"
+        didSet {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+
+            let number = NSNumber(value: Double(totalPrice))
+            let formattedNumber = numberFormatter.string(from: number)
+            priceLabel.text = "\(formattedNumber ?? "0")원"
         }
     }
     
@@ -64,7 +69,7 @@ class ResultViewController: UIViewController {
         totalLabel.text = "총액"
         totalLabel.font = UIFont(name: "Pretendard-Regular", size: 33)
         
-        priceLabel.text = "\(totalPrice)원"
+//        priceLabel.text = "\(totalPrice)원"
         priceLabel.font = UIFont(name: "Pretendard-Medium", size: 33)
         
         stackView.addArrangedSubview(totalLabel)
@@ -252,7 +257,7 @@ class ResultViewController: UIViewController {
     func totalAmount() {
         let totalCurrency = 50000 * fiftyThousandBillInit + 10000 * tenThousandBillInit + 5000 * fiveThousandBillInit + 1000 * oneThousandBillInit
         totalPrice = totalCurrency
-        priceLabel.text = "\(totalPrice)원"
+//        priceLabel.text = "\(totalPrice)원"
     }
     
     func classifyingCurrencies() {
@@ -279,7 +284,7 @@ class ResultViewController: UIViewController {
             if newNumber >= 0 {
                 billNumber.text = "\(newNumber)"
                 totalPrice += increment * billValue
-                priceLabel.text = "\(totalPrice)원"
+//                priceLabel.text = "\(totalPrice)원"
             }
         }
     }
