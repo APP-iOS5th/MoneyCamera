@@ -8,7 +8,7 @@
 import UIKit
 
 class RequestImageViewController: UIViewController {
-    let VisionObjectRecognitionModel = VisionObjectRecognition.shared
+    let visionObjectRecognitionModel = VisionObjectRecognition.shared
     
     private lazy var lensLogoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -143,6 +143,8 @@ class RequestImageViewController: UIViewController {
         navigationItem.title = ""
         navigationItem.largeTitleDisplayMode = .inline
         
+        visionObjectRecognitionModel.setupLayers()
+        
     }
     
     @objc func cameraTapped() {
@@ -179,10 +181,11 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
             fatalError("Failed CIImage convert")
         }
         
-        VisionObjectRecognitionModel.setupVision()
-        VisionObjectRecognitionModel.VisonHandler(image: coreImage)
+        visionObjectRecognitionModel.setupVision()
+        visionObjectRecognitionModel.VisonHandler(image: coreImage)
+
         
-        picker.dismiss(animated: true){
+        picker.dismiss(animated: true) {
             let resultViewController = ResultViewController()
             resultViewController.selectedImage = userPickedImage
             self.navigationController?.pushViewController(resultViewController, animated: true)

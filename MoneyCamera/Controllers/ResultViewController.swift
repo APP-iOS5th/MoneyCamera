@@ -8,7 +8,7 @@
 import UIKit
 
 class ResultViewController: UIViewController {
-    let VisionObjectRecognitionModel = VisionObjectRecognition.shared
+    let visionObjectRecognitionModel = VisionObjectRecognition.shared
     var selectedImage: UIImage?
     
     var fiftyThousandBillInit = 0
@@ -40,6 +40,7 @@ class ResultViewController: UIViewController {
     
     private lazy var billImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         
         if let image = selectedImage {
             imageView.image = image
@@ -194,7 +195,7 @@ class ResultViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        VisionObjectRecognitionModel.dictReset()
+        visionObjectRecognitionModel.dictReset()
     }
     
 
@@ -261,7 +262,7 @@ class ResultViewController: UIViewController {
     }
     
     func classifyingCurrencies() {
-        for Currency in VisionObjectRecognitionModel.dict {
+        for Currency in visionObjectRecognitionModel.dict {
             switch Currency.key {
             case "50000won":
                 fiftyThousandBillInit = Currency.value
