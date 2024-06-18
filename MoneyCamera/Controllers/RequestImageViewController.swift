@@ -143,7 +143,6 @@ class RequestImageViewController: UIViewController {
         navigationItem.title = ""
         navigationItem.largeTitleDisplayMode = .inline
         
-        visionObjectRecognitionModel.setupLayers()
         
     }
     
@@ -183,6 +182,7 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
         
         visionObjectRecognitionModel.setupVision()
         visionObjectRecognitionModel.VisonHandler(image: coreImage)
+        visionObjectRecognitionModel.selectedImage = userPickedImage
 
         
         picker.dismiss(animated: true) {

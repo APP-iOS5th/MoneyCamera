@@ -13,9 +13,9 @@ class VisionObjectRecognition {
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
     var dict:[String:Int] = [:]
-    var processedImage: UIImage?
+    var selectedImage: UIImage?
     
-    
+
     static let shared = VisionObjectRecognition()
     
     private init() {
@@ -41,13 +41,14 @@ class VisionObjectRecognition {
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
             let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
-                if let results = request.results {
-                    self.drawVisionRequestResults(results)
-                }
+                DispatchQueue.main.async(execute: { [self] in
+                    // perform all the UI updates on the main queue
+                    if let results = request.results {
+                        self.drawVisionRequestResults(results)
+                    }
+                })
             })
-            objectRecognition.imageCropAndScaleOption = .scaleFill
             self.requests = [objectRecognition]
-            
         } catch let error as NSError {
             print("Model loading went wrong: \(error)")
         }
@@ -58,7 +59,6 @@ class VisionObjectRecognition {
     func VisonHandler (image: CIImage) {
         let imageRequestHandler = VNImageRequestHandler(ciImage:image)
         do {
-            
             try imageRequestHandler.perform(self.requests)
             
         } catch {
@@ -67,53 +67,59 @@ class VisionObjectRecognition {
     }
     // 함수명 변경 또는 기능 추가 예정
     func drawVisionRequestResults(_ results: [Any]) {
-        
-        guard detectionOverlay != nil else {
-            print("detectionOverlay is not initialized")
+        guard let image = selectedImage else {
+            print("Image not found")
             return
         }
         
-        detectionOverlay.sublayers?.removeAll()
-
-            CATransaction.begin()
-            CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-
-            for observation in results where observation is VNRecognizedObjectObservation {
-                guard let objectObservation = observation as? VNRecognizedObjectObservation else {
-                    continue
-                }
-
-                // Select only the label with the highest confidence.
-                let topLabelObservation = objectObservation.labels[0]
-                addCount(key: topLabelObservation.identifier)
-                
-                let boundingBox = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
-                let boxLayer = createBoxLayer(rect: boundingBox, identifier: topLabelObservation.identifier)
-                detectionOverlay.addSublayer(boxLayer)
+        
+        UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+        
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return
+        }
+        
+        for observation in results where observation is VNRecognizedObjectObservation {
+            guard let objectObservation = observation as? VNRecognizedObjectObservation else {
+                continue
             }
-            CATransaction.commit()
+            
+            // Select only the label with the highest confidence.
+            let topLabelObservation = objectObservation.labels[0]
+            addCount(key: topLabelObservation.identifier)
+            
+            let boundingBox = objectObservation.boundingBox
+            let size = image.size
+            let rect = CGRect(
+                x: boundingBox.origin.x * size.width,
+                y: (1 - boundingBox.origin.y - boundingBox.height) * size.height,
+                width: boundingBox.width * size.width,
+                height: boundingBox.height * size.height
+            )
+            
+            context.setStrokeColor(UIColor.red.cgColor)
+            context.setLineWidth(2.0)
+            context.stroke(rect)
+        }
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Update your imageView or any other UI element with the new image
+        DispatchQueue.main.async {
+            self.selectedImage = newImage
+        }
     }
     
-    private func createBoxLayer(rect: CGRect, identifier: String) -> CALayer {
-        let boxLayer = CALayer()
-        boxLayer.frame = rect
-        boxLayer.borderWidth = 2.0
-        boxLayer.borderColor = UIColor.red.cgColor
-        boxLayer.cornerRadius = 4.0
-        return boxLayer
-    }
-    
-    func setupLayers() {
-        rootLayer = CALayer()
-        rootLayer.bounds = CGRect(x: 0, y: 0, width: bufferSize.width, height: bufferSize.height)
-        rootLayer.position = CGPoint(x: bufferSize.width / 2, y: bufferSize.height / 2)
-        rootLayer.backgroundColor = UIColor.clear.cgColor
-
-        detectionOverlay = CALayer()
-        detectionOverlay.bounds = rootLayer.bounds
-        detectionOverlay.position = CGPoint(x: rootLayer.bounds.midX, y: rootLayer.bounds.midY)
-        detectionOverlay.backgroundColor = UIColor.clear.cgColor
-        rootLayer.addSublayer(detectionOverlay)
+    func layerToImage(layer: CALayer) -> UIImage? {
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, layer.isOpaque, scale)
+        defer { UIGraphicsEndImageContext() }
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        layer.render(in: context)
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
     
     func addCount(key: String) {

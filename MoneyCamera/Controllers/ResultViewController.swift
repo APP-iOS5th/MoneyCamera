@@ -42,7 +42,7 @@ class ResultViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         
-        if let image = selectedImage {
+        if let image = visionObjectRecognitionModel.selectedImage {
             imageView.image = image
         } else {
             billImageView.image = UIImage(systemName: "questionmark.folder")
