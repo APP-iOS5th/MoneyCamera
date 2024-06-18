@@ -11,7 +11,7 @@ import Vision
 
 class VisionObjectRecognition {
     var bufferSize: CGSize = .zero
-    var rootLayer: CALayer! = nil
+//    var rootLayer: CALayer! = nil
     var dict:[String:Int] = [:]
     var selectedImage: UIImage?
     
@@ -99,9 +99,19 @@ class VisionObjectRecognition {
                 height: boundingBox.height * size.height
             )
             
-            context.setStrokeColor(UIColor.red.cgColor)
+            context.setStrokeColor(UIColor.black.cgColor)
             context.setLineWidth(2.0)
             context.stroke(rect)
+            
+            let text = "\(topLabelObservation.identifier): \(String(format: "%.3f", topLabelObservation.confidence))"
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.boldSystemFont(ofSize: 30),
+                .foregroundColor: UIColor.red,
+                .backgroundColor: UIColor.gray
+            ]
+            let textSize = (text as NSString).size(withAttributes: attributes)
+            let textRect = CGRect(x: rect.origin.x, y: rect.origin.y - textSize.height, width: textSize.width, height: textSize.height)
+            (text as NSString).draw(in: textRect, withAttributes: attributes)
         }
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -111,15 +121,6 @@ class VisionObjectRecognition {
         DispatchQueue.main.async {
             self.selectedImage = newImage
         }
-    }
-    
-    func layerToImage(layer: CALayer) -> UIImage? {
-        let scale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, layer.isOpaque, scale)
-        defer { UIGraphicsEndImageContext() }
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        layer.render(in: context)
-        return UIGraphicsGetImageFromCurrentImageContext()
     }
     
     func addCount(key: String) {
