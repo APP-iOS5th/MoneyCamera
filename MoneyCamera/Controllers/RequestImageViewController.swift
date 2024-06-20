@@ -54,9 +54,10 @@ class RequestImageViewController: UIViewController {
         config.image = UIImage(systemName: "camera.fill", withConfiguration: imageConfiguration)
         config.baseBackgroundColor = .white
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
+        config.cornerStyle = .capsule
         button.configuration = config
-        button.layer.cornerRadius = 30
-        button.layer.masksToBounds = true
+//        button.layer.cornerRadius = 30
+//        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(cameraTapped), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -167,6 +168,7 @@ class RequestImageViewController: UIViewController {
     }
     
 }
+
 
 // 사진 선택 후
 extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
