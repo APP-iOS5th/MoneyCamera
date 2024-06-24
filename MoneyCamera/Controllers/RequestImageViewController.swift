@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class RequestImageViewController: UIViewController {
     let visionObjectRecognitionModel = VisionObjectRecognition.shared
@@ -29,7 +30,7 @@ class RequestImageViewController: UIViewController {
     
     private lazy var subtitleLabel: UILabel = {
         let subtitleLabel = UILabel()
-        subtitleLabel.text = "Lion LAB 7"
+        subtitleLabel.text = "Likelion LAB7"
         subtitleLabel.font = UIFont(name: "Pretendard-Bold", size: 8)
         subtitleLabel.textColor = UIColor(named: "subtitleColor")
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,8 +57,6 @@ class RequestImageViewController: UIViewController {
         config.baseForegroundColor = UIColor(named: "buttonIconColor_green")
         config.cornerStyle = .capsule
         button.configuration = config
-//        button.layer.cornerRadius = 30
-//        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(cameraTapped), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -109,7 +108,6 @@ class RequestImageViewController: UIViewController {
         return button
     }()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "backgroundColor_green")
@@ -125,7 +123,6 @@ class RequestImageViewController: UIViewController {
         
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            
             lensLogoImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             lensLogoImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor, constant: -100),
             lensLogoImageView.widthAnchor.constraint(equalToConstant: 280),
@@ -143,8 +140,6 @@ class RequestImageViewController: UIViewController {
         
         navigationItem.title = ""
         navigationItem.largeTitleDisplayMode = .inline
-        
-        
     }
     
     @objc func cameraTapped() {
@@ -156,6 +151,30 @@ class RequestImageViewController: UIViewController {
     }
     
     @objc func albumTapped() {
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                DispatchQueue.main.async {
+                    self.openPhotoLibrary()
+                }
+            case .denied, .restricted:
+                DispatchQueue.main.async {
+                    self.showAccessDeniedAlert()
+                }
+            case .notDetermined:
+                // 권한이 아직 결정되지 않은 경우
+                break
+            case .limited:
+                DispatchQueue.main.async {
+                    self.openPhotoLibrary()
+                }
+            @unknown default:
+                fatalError("Unknown case for PHPhotoLibrary authorization status")
+            }
+        }
+    }
+    
+    private func openPhotoLibrary() {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
@@ -163,12 +182,18 @@ class RequestImageViewController: UIViewController {
         present(picker, animated: true)
     }
     
+    private func showAccessDeniedAlert() {
+        let alert = UIAlertController(title: "권한 필요",
+                                      message: "앱에서 사진 라이브러리에 접근하려면 권한이 필요합니다. 설정에서 접근 권한을 허용해주세요.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
+    }
+    
     @objc func historyTapped() {
         show(HistoryViewController(), sender: nil)
     }
-    
 }
-
 
 // 사진 선택 후
 extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -186,7 +211,6 @@ extension RequestImageViewController: UIImagePickerControllerDelegate, UINavigat
         visionObjectRecognitionModel.VisonHandler(image: coreImage)
         visionObjectRecognitionModel.selectedImage = userPickedImage
 
-        
         picker.dismiss(animated: true) {
             let resultViewController = ResultViewController()
             resultViewController.selectedImage = userPickedImage
